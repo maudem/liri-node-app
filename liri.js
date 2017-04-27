@@ -36,20 +36,25 @@ function music(){
 
 								{
 									//request info
-									spotify.search({type: "track", query: user.song }, function(err, data) 
+									spotify.search({type: "track", query: user.song, "limit": 3}, function(err, data) 
 									{
 										if(err) 
 										{
 											console.log("Error: " + err);
 										}
 										else{
-											var info = (data, null, 1);
-											var ans = JSON.stringify(info);
-											console.log(JSON.parse(ans));
+											var info = data.body.name;
+
+											console.log(info);
+
+											 
+											//console.log(info);
+											 //console.log(JSON.stringify(data, null, 2));
+											// console.log(JSON.parse(ans));
 
 											}	
 												
-									});
+									})
 								});
 
 				}
@@ -93,28 +98,30 @@ var texts = [];
 var param = {screen_name: "divqween"};
 
 
-function myTweets(){
+function myTweets()
+	{
 
 	
-		user.get('statuses/user_timeline', param, function(error, tweets ,response)
+		user.get('statuses/user_timeline', param, function(err, tweets ,response)
 		{
 
-		if (!error)
-
-			{ console.log(JSON.stringify(response, null, 2));
+			if (!err)
+			{
 
 				for(var i=0; i<20; i++)
-					{
-						time = (result.data[i].created_at).toGMTString();
-						texts = result.data[i].text;
+						{	
+							console.log(JSON.stringify(err, null, 2));
+							time = (results.data[i].created_at).toGMTString();
+							texts = results.data[i].text;
 
 
-						console.log("____________________ \nTimeStamp: " + time + "\n \nTweet: " + texts +"\n \n___________________\n");
-					}	
-			}
-		else{
-				console.log("Error: " + this.error +".  Something went wrong, try another inquiry.");
-			}
+							console.log("____________________ \nTimeStamp: " + time + "\n \nTweet: " + texts +"\n \n___________________\n");
+						}
+
+			} 	else{
+				console.log("Error: " + err +".  Something went wrong, try another inquiry.");
+			
+					}
 
 		});
 	}
@@ -129,7 +136,7 @@ function myTweets(){
 	// }
 	
 
-console.log("Hello, I'm Liri.")
+console.log("Hello, I'm Liri.");
 
 inquirer.prompt([
 
@@ -179,10 +186,10 @@ inquirer.prompt([
 						myTweets();
 					}
 
-					else if (user.userPrompt === "surprise me")
-					{
-						rando();
-					}
+					// else if (user.userPrompt === "surprise me")
+					// {
+					// 	rando();
+					// }
 
-					fs.appendFile("log.txt","\n" )
+					fs.appendFile("log.txt","\n" + console.log(process.argv[3]));
 				});
