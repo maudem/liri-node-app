@@ -111,15 +111,19 @@ function myTweets()
 				for(var i=0; i<20; i++)
 						{	
 							console.log(JSON.stringify(err, null, 2));
-							time = (results.data[i].created_at).toGMTString();
-							texts = results.data[i].text;
+							if(!tweets[i])
+								{
+									return false;
+								}
+							time = new Date(tweets[i].created_at).toLocaleString();
+							texts = tweets[i].text;
 
 
-							console.log("____________________ \nTimeStamp: " + time + "\n \nTweet: " + texts +"\n \n___________________\n");
+							console.log("____________________ \nTimeStamp: " + time + "\n \nTweet: " + texts +"\n");
 						}
 
 			} 	else{
-				console.log("Error: " + err +".  Something went wrong, try another inquiry.");
+				console.log("Error: " + JSON.stringify(err, null, 2) +".  Something went wrong, try another inquiry.");
 			
 					}
 
